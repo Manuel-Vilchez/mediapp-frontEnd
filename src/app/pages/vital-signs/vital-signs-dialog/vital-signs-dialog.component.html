@@ -1,0 +1,45 @@
+<mat-dialog-content>
+    <mat-toolbar><span>Medic Info</span></mat-toolbar>
+
+    <div class="example-container">
+
+        <mat-form-field>
+            <mat-label>Patient</mat-label>
+            <mat-select [(ngModel)]="vitalSign.idPatient">
+                @for (p of patients; track $index) {
+                    <mat-option [value]="p.idPatient">{{p.firstName}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="picker" [(ngModel)]="vitalSign.date" (dateChange)="getDate($event)">
+            <mat-hint>DD/MM/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+
+        <!--<mat-form-field>
+            <input matInput placeholder="Date" [(ngModel)]="vitalSign.date">
+        </mat-form-field>-->
+
+        <mat-form-field>
+            <input matInput placeholder="Temperature" [(ngModel)]="vitalSign.temperature">
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="PULSE" [(ngModel)]="vitalSign.pulse">
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Respiratory Rhythm" [(ngModel)]="vitalSign.respiratoryRhythm">
+        </mat-form-field>
+
+        
+        <button mat-button (click)="operate()">Done</button>
+        <button mat-button color="accent" (click)="close()">Cancel</button>
+
+    </div>
+</mat-dialog-content>

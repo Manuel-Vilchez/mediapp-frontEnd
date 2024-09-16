@@ -1,0 +1,38 @@
+<mat-form-field>
+  <mat-label>Filter</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Filter" #input>
+</mat-form-field>
+
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort>
+    <!-- Generar columnas dinámicamente -->
+     @for (column of columns; track $index) {
+      <ng-container [matColumnDef]="column.def">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ column.label }}</th>
+        <td mat-cell *matCellDef="let row">
+          <!-- Verifica si es la columna de acciones -->
+           @if (column.def === 'actions') {
+            <ng-container>
+              <!-- Renderiza el template personalizado -->
+               @if (customTemplate) {
+                <ng-container>
+                  <ng-container *ngTemplateOutlet="customTemplate; context: { $implicit: row }"></ng-container>
+                </ng-container>
+               }              
+            </ng-container>
+           }@else {
+            <ng-container >
+              {{ row[column.def] }}
+            </ng-container>
+           }                  
+        </td>
+      </ng-container>  
+     }
+  
+    <!-- Filas y cabeceras -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="pageSizeOptions"  aria-label="Paginator"></mat-paginator>
+</div>
